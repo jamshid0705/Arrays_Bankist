@@ -71,31 +71,51 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 ///////////////////////////// Simple array methods ///////////////////
-// slice
-let arr=['a','b','c','d','f']
-console.log(arr.slice(2))
-let str='jamshid'
-console.log(str.slice(2))
-console.log(arr.slice(3,4))
+// // slice
+// let arr=['a','b','c','d','f']
+// console.log(arr.slice(2))
+// let str='jamshid'
+// console.log(str.slice(2))
+// console.log(arr.slice(3,4))
 
-// splice bu method slice o'xshaydi faqat orginal arrayga tasir qiladi
-arr.splice(3)
-console.log(arr)
-arr.splice(1,2)
-console.log(arr)
+// // splice bu method slice o'xshaydi faqat orginal arrayga tasir qiladi
+// arr.splice(3)
+// console.log(arr)
+// arr.splice(1,2)
+// console.log(arr)
 
-// reverse teskarisiga chiqaradi va orginal arrayga tasir qiladi
-arr = ['a', 'b', 'c', 'd', 'f'];
-console.log(arr.reverse())
-console.log(arr)
+// // reverse teskarisiga chiqaradi va orginal arrayga tasir qiladi
+// arr = ['a', 'b', 'c', 'd', 'f'];
+// console.log(arr.reverse())
+// console.log(arr)
 
-// concat 2ta arrayni qo'shadi
-const arr1=['n','m','j','k']
-console.log(arr.concat(arr1))
-console.log(arr)
+// // concat 2ta arrayni qo'shadi
+// const arr1=['n','m','j','k']
+// console.log(arr.concat(arr1))
+// console.log(arr)
 
-// join arrayni stringga aylantiradi
-console.log(typeof arr.join(''))
+// // join arrayni stringga aylantiradi
+// console.log(typeof arr.join(''))
+
+////////////////////////// for each /////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for(const [index,movement] of movements.entries()){
+  if(movement>0){
+    console.log(`Movement ${index+1}: You deposited ${movement}`)
+  } else{
+    console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+console.log('-------------forEach----------------')
+movements.forEach(function(movement,index,array){
+  console.log(
+    movement > 0
+      ? `Movement ${index + 1}: You deposited ${movement}`
+      : `Movement ${index + 1}: You withdrew ${Math.abs(movement)}`
+  );
+  // console.log(array)
+})
