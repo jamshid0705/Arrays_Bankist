@@ -64,7 +64,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 
 const displeyMovement = function (movement) {
-  containerMovements.innerHTML=''
+  containerMovements.innerHTML = '';
   movement.forEach(function (mov, index) {
     const html = `<div class="movements__row">
                     <div class="movements__type movements__type--${
@@ -73,12 +73,29 @@ const displeyMovement = function (movement) {
                     <div class="movements__date">3 days ago</div>
                     <div class="movements__value">${mov}€</div>
                   </div>`;
-    containerMovements.insertAdjacentHTML('beforeend', html);              
+    containerMovements.insertAdjacentHTML('beforeend', html);
   });
- 
 };
 displeyMovement(account1.movements);
-/////////////////////////////////////////////////
+///////////////////////////////////////////////// coding chellenge ///////
+const juliaData = [3, 5, 2, 12, 7];
+const kateData = [4, 1, 15, 8, 3];
+juliaData.splice(0, 1);
+juliaData.splice(juliaData.length - 2, juliaData.length);
+console.log(juliaData);
+const newData = juliaData.concat(kateData);
+console.log(newData);
+
+const checkDogs = function (data) {
+  data.forEach(function (val, index) {
+    console.log(
+      val >= 5
+        ? `Dog number ${index + 1} is an adult, and is ${val} years old`
+        : `Dog number ${index + 1} is still a puppy 🐶`
+    );
+  });
+};
+checkDogs(newData);
 // LECTURES
 
 // const currencies = new Map([
@@ -87,7 +104,7 @@ displeyMovement(account1.movements);
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 ///////////////////////////// Simple array methods ///////////////////
 // // slice
@@ -155,3 +172,17 @@ displeyMovement(account1.movements);
 //   console.log(`${key}:${value}`);
 //   // console.log(set)
 // })
+
+/////////////////////// map method ////////////////////
+const eurToUsd = 1.1;
+
+const movementsUSD = movements.map(val => val * eurToUsd);
+console.log(movementsUSD);
+
+const movementDescription = movements.map((val, index) =>
+  val > 0
+    ? `Movement ${index + 1}: You deposited ${val}`
+    : `Movement ${index + 1}: You withdrew ${Math.abs(val)}`
+);
+
+console.log(movementDescription)
