@@ -77,25 +77,42 @@ const displeyMovement = function (movement) {
   });
 };
 displeyMovement(account1.movements);
-///////////////////////////////////////////////// coding chellenge ///////
-const juliaData = [3, 5, 2, 12, 7];
-const kateData = [4, 1, 15, 8, 3];
-juliaData.splice(0, 1);
-juliaData.splice(juliaData.length - 2, juliaData.length);
-console.log(juliaData);
-const newData = juliaData.concat(kateData);
-console.log(newData);
 
-const checkDogs = function (data) {
-  data.forEach(function (val, index) {
-    console.log(
-      val >= 5
-        ? `Dog number ${index + 1} is an adult, and is ${val} years old`
-        : `Dog number ${index + 1} is still a puppy 🐶`
-    );
+// const user = 'Jamshid Xatamov Komilovich'; // jxk
+
+const createUserName = function (user) {
+  user.forEach(val => {
+    val.username = val.owner
+      .split(' ')
+      .map(val => val.slice(0, 1))
+      .join('')
+      .toLowerCase();
   });
 };
-checkDogs(newData);
+createUserName(accounts);
+console.log(accounts)
+///////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]; 
+
+// ///////////////////////////////////////////////// coding chellenge ///////
+// const juliaData = [3, 5, 2, 12, 7];
+// const kateData = [4, 1, 15, 8, 3];
+// juliaData.splice(0, 1);
+// juliaData.splice(juliaData.length - 2, juliaData.length);
+// console.log(juliaData);
+// const newData = juliaData.concat(kateData);
+// console.log(newData);
+
+// const checkDogs = function (data) {
+//   data.forEach(function (val, index) {
+//     console.log(
+//       val >= 5
+//         ? `Dog number ${index + 1} is an adult, and is ${val} years old`
+//         : `Dog number ${index + 1} is still a puppy 🐶`
+//     );
+//   });
+// };
+// checkDogs(newData);
 // LECTURES
 
 // const currencies = new Map([
@@ -103,8 +120,6 @@ checkDogs(newData);
 //   ['EUR', 'Euro'],
 //   ['GBP', 'Pound sterling'],
 // ]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 ///////////////////////////// Simple array methods ///////////////////
 // // slice
@@ -174,15 +189,28 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // })
 
 /////////////////////// map method ////////////////////
-const eurToUsd = 1.1;
+// const eurToUsd = 1.1;
 
-const movementsUSD = movements.map(val => val * eurToUsd);
-console.log(movementsUSD);
+// const movementsUSD = movements.map(val => val * eurToUsd);
+// console.log(movementsUSD);
 
-const movementDescription = movements.map((val, index) =>
-  val > 0
-    ? `Movement ${index + 1}: You deposited ${val}`
-    : `Movement ${index + 1}: You withdrew ${Math.abs(val)}`
-);
+// const movementDescription = movements.map((val, index) =>
+//   val > 0
+//     ? `Movement ${index + 1}: You deposited ${val}`
+//     : `Movement ${index + 1}: You withdrew ${Math.abs(val)}`
+// );
 
-console.log(movementDescription)
+// console.log(movementDescription)
+
+//////////////////// filter method /////////////////
+
+const deposit=movements.filter((val,key)=>val>0)
+console.log(movements)
+console.log(deposit)
+
+const depositFor=[]
+for(const val of movements){ if(val>0) depositFor.push(val)}
+console.log(depositFor)
+
+const withdrawals=movements.filter((val)=> val<0)
+console.log(withdrawals)
