@@ -61,7 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
+////////////////////////////////// display Movements ///////////////////
 
 const displeyMovement = function (movement) {
   containerMovements.innerHTML = '';
@@ -78,6 +78,11 @@ const displeyMovement = function (movement) {
 };
 displeyMovement(account1.movements);
 
+const callsDispleyMovement=function(movement){
+  const balance=movement.reduce((acc,val,index,arr)=>acc+val,0)
+  labelBalance.textContent=`${balance} EUR`
+}
+callsDispleyMovement(account1.movements)
 // const user = 'Jamshid Xatamov Komilovich'; // jxk
 
 const createUserName = function (user) {
@@ -90,9 +95,9 @@ const createUserName = function (user) {
   });
 };
 createUserName(accounts);
-console.log(accounts)
+console.log(accounts);
 ///////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]; 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // ///////////////////////////////////////////////// coding chellenge ///////
 // const juliaData = [3, 5, 2, 12, 7];
@@ -203,14 +208,34 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(movementDescription)
 
 //////////////////// filter method /////////////////
+const deposit = movements.filter((val, key) => val > 0);
+console.log(movements);
+console.log(deposit);
 
-const deposit=movements.filter((val,key)=>val>0)
-console.log(movements)
-console.log(deposit)
+const depositFor = [];
+for (const val of movements) {
+  if (val > 0) depositFor.push(val);
+}
+console.log(depositFor);
 
-const depositFor=[]
-for(const val of movements){ if(val>0) depositFor.push(val)}
-console.log(depositFor)
+const withdrawals = movements.filter(val => val < 0);
+console.log(withdrawals);
 
-const withdrawals=movements.filter((val)=> val<0)
-console.log(withdrawals)
+////////////////// reduce method //////////////////
+// const movementAll=movements.reduce(function(acc,val,index,arr){
+//   return acc+val
+// },0)
+// console.log(movementAll)
+
+const movementAll = movements.reduce((acc, val, index, arr) => acc + val, 100);
+console.log(movementAll);
+
+let movementAll1 = 0;
+for (const val of movements) {
+  movementAll1 += val;
+}
+console.log(movementAll1);
+
+// maximum value
+const max=movements.reduce((acc,val)=>acc>=val?acc:val,movements[0])
+console.log(max)
