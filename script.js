@@ -76,34 +76,34 @@ const displeyMovement = function (movement) {
     containerMovements.insertAdjacentHTML('beforeend', html);
   });
 };
-displeyMovement(account1.movements);
 
+// umumiy summa
 const callsDispleyMovement = function (movement) {
   const balance = movement.reduce((acc, val, index, arr) => acc + val, 0);
   labelBalance.textContent = `${balance}€`;
 };
-callsDispleyMovement(account1.movements);
 
-const calcDispleySummary = function (movement) {
-  const incomes = movement
+// o'tkazmalarni hisoblash
+const calcDispleySummary = function (account) {
+  const incomes = account.movements
     .filter(val => val > 0)
     .reduce((acc, val) => acc + val, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const outcomes = movement
+  const outcomes = account.movements
     .filter(val => val < 0)
     .reduce((acc, val) => acc + val, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movement
+  const interest = account.movements
     .filter(val => val > 0)
-    .map(val => (val * 1.2) / 100)
+    .map(val => (val * account.interestRate) / 100)
     .filter(val => val >= 1)
     .reduce((acc, val) => acc + val, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDispleySummary(account1.movements);
 
+// username user yasash
 const createUserName = function (user) {
   user.forEach(val => {
     val.username = val.owner
@@ -114,7 +114,30 @@ const createUserName = function (user) {
   });
 };
 createUserName(accounts);
-console.log(accounts);
+
+// Event handler
+
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  const account = accounts.find(
+    val => inputLoginUsername.value == val.username
+  );
+  if (account) {
+    if (account.pin === Number(inputLoginPin.value)) {
+      // ekranga xabarni chiqarish
+      labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
+      containerApp.style.opacity = 1;
+      inputLoginUsername.value = '';
+      inputLoginPin.value = '';
+      // movement larni chiqarish
+      displeyMovement(account.movements);
+      // umumiy movementni chiqarish
+      callsDispleyMovement(account.movements);
+      // deposit withdrawal larni chiqarish
+      calcDispleySummary(account);
+    }
+  }
+});
 ///////////////////////////////////////////////////
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -226,53 +249,50 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // console.log(movementDescription)
 
-//////////////////// filter method /////////////////
-const deposit = movements.filter((val, key) => val > 0);
-console.log(movements);
-console.log(deposit);
+// //////////////////// filter method /////////////////
+// const deposit = movements.filter((val, key) => val > 0);
+// console.log(movements);
+// console.log(deposit);
 
-const depositFor = [];
-for (const val of movements) {
-  if (val > 0) depositFor.push(val);
-}
-console.log(depositFor);
+// const depositFor = [];
+// for (const val of movements) {
+//   if (val > 0) depositFor.push(val);
+// }
+// console.log(depositFor);
 
-const withdrawals = movements.filter(val => val < 0);
-console.log(withdrawals);
+// const withdrawals = movements.filter(val => val < 0);
+// console.log(withdrawals);
 
-////////////////// reduce method //////////////////
-// const movementAll=movements.reduce(function(acc,val,index,arr){
-//   return acc+val
-// },0)
-// console.log(movementAll)
+// ////////////////// reduce method //////////////////
+// // const movementAll=movements.reduce(function(acc,val,index,arr){
+// //   return acc+val
+// // },0)
+// // console.log(movementAll)
 
-const movementAll = movements.reduce((acc, val, index, arr) => acc + val, 100);
-console.log(movementAll);
+// const movementAll = movements.reduce((acc, val, index, arr) => acc + val, 100);
+// console.log(movementAll);
 
-let movementAll1 = 0;
-for (const val of movements) {
-  movementAll1 += val;
-}
-console.log(movementAll1);
+// let movementAll1 = 0;
+// for (const val of movements) {
+//   movementAll1 += val;
+// }
+// console.log(movementAll1);
 
-// maximum value
-const max = movements.reduce(
-  (acc, val) => (acc >= val ? acc : val),
-  movements[0]
-);
-console.log(max);
+// // maximum value
+// const max = movements.reduce(
+//   (acc, val) => (acc >= val ? acc : val),
+//   movements[0]
+// );
+// console.log(max);
 
-/////////////////////// coding chellenge //////////////////////////
-let ages = [5, 2, 4, 1, 15, 8, 3];
+// /////////////////////// coding chellenge //////////////////////////
+// let ages = [5, 2, 4, 1, 15, 8, 3];
 
-const calcAverageHumanAge = function (dogs) {
-  const age = dogs.map((val, key, arr) => (val <= 2 ? 2 * val : 16 + val * 4));
-  console.log(age);
-  const filterAges = age.filter((val, key, arr) => val >= 18);
-  console.log(filterAges);
-  const moderatelyAge = filterAges.reduce((acc, val, key, arr) => {
-    return val + acc;
-  }, 0);
-  return moderatelyAge / filterAges.length;
-};
-console.log(calcAverageHumanAge(ages));
+// const calcAverageHumanAge = function (dogs) {
+//   const age = dogs
+//     .map((val, key, arr) => (val <= 2 ? 2 * val : 16 + val * 4))
+//     .filter((val, key, arr) => val >= 18)
+//     .reduce((acc, val, key, arr) => acc + val / arr.length, 0);
+//   return age;
+// };
+// console.log(calcAverageHumanAge(ages));
