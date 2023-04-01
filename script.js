@@ -78,12 +78,31 @@ const displeyMovement = function (movement) {
 };
 displeyMovement(account1.movements);
 
-const callsDispleyMovement=function(movement){
-  const balance=movement.reduce((acc,val,index,arr)=>acc+val,0)
-  labelBalance.textContent=`${balance} EUR`
-}
-callsDispleyMovement(account1.movements)
-// const user = 'Jamshid Xatamov Komilovich'; // jxk
+const callsDispleyMovement = function (movement) {
+  const balance = movement.reduce((acc, val, index, arr) => acc + val, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+callsDispleyMovement(account1.movements);
+
+const calcDispleySummary = function (movement) {
+  const incomes = movement
+    .filter(val => val > 0)
+    .reduce((acc, val) => acc + val, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movement
+    .filter(val => val < 0)
+    .reduce((acc, val) => acc + val, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movement
+    .filter(val => val > 0)
+    .map(val => (val * 1.2) / 100)
+    .filter(val => val >= 1)
+    .reduce((acc, val) => acc + val, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDispleySummary(account1.movements);
 
 const createUserName = function (user) {
   user.forEach(val => {
@@ -237,5 +256,23 @@ for (const val of movements) {
 console.log(movementAll1);
 
 // maximum value
-const max=movements.reduce((acc,val)=>acc>=val?acc:val,movements[0])
-console.log(max)
+const max = movements.reduce(
+  (acc, val) => (acc >= val ? acc : val),
+  movements[0]
+);
+console.log(max);
+
+/////////////////////// coding chellenge //////////////////////////
+let ages = [5, 2, 4, 1, 15, 8, 3];
+
+const calcAverageHumanAge = function (dogs) {
+  const age = dogs.map((val, key, arr) => (val <= 2 ? 2 * val : 16 + val * 4));
+  console.log(age);
+  const filterAges = age.filter((val, key, arr) => val >= 18);
+  console.log(filterAges);
+  const moderatelyAge = filterAges.reduce((acc, val, key, arr) => {
+    return val + acc;
+  }, 0);
+  return moderatelyAge / filterAges.length;
+};
+console.log(calcAverageHumanAge(ages));
