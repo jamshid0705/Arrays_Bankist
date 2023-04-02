@@ -73,14 +73,14 @@ const displeyMovement = function (movement) {
                     <div class="movements__date">3 days ago</div>
                     <div class="movements__value">${mov}€</div>
                   </div>`;
-    containerMovements.insertAdjacentHTML('beforeend', html);
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
 // umumiy summa
-const callsDispleyMovement = function (movement) {
-  const balance = movement.reduce((acc, val, index, arr) => acc + val, 0);
-  labelBalance.textContent = `${balance}€`;
+const callsDispleyMovement = function (acc) {
+  acc.balance = acc.movements.reduce((acc, val, index, arr) => acc + val, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 };
 
 // o'tkazmalarni hisoblash
@@ -114,14 +114,20 @@ const createUserName = function (user) {
   });
 };
 createUserName(accounts);
-
-// Event handler
-
+// update UI
+const updateUI = function (account) {
+  // movement larni chiqarish
+  displeyMovement(account.movements);
+  // umumiy movementni chiqarish
+  callsDispleyMovement(account);
+  // deposit withdrawal larni chiqarish
+  calcDispleySummary(account);
+};
+// Event handler login
+let account;
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
-  const account = accounts.find(
-    val => inputLoginUsername.value == val.username
-  );
+  account = accounts.find(val => inputLoginUsername.value == val.username);
   if (account) {
     if (account.pin === Number(inputLoginPin.value)) {
       // ekranga xabarni chiqarish
@@ -129,12 +135,27 @@ btnLogin.addEventListener('click', function (e) {
       containerApp.style.opacity = 1;
       inputLoginUsername.value = '';
       inputLoginPin.value = '';
-      // movement larni chiqarish
-      displeyMovement(account.movements);
-      // umumiy movementni chiqarish
-      callsDispleyMovement(account.movements);
-      // deposit withdrawal larni chiqarish
-      calcDispleySummary(account);
+      updateUI(account);
+    }
+  }
+});
+
+// transfor money
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const transferTo = inputTransferTo.value;
+  const amount = Number(inputTransferAmount.value);
+  const findAccount = accounts.find(acc => acc.username === transferTo);
+  inputTransferAmount.value=inputTransferTo.value=''
+  if (findAccount) {
+    if (
+      amount > 0 &&
+      account.balance >= amount &&
+      account.username !== transferTo
+    ) {
+      account.movements.push(-amount);
+      findAccount.movements.push(amount);
+      updateUI(account);
     }
   }
 });
