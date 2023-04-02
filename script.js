@@ -183,10 +183,10 @@ btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
   const loan = Number(inputLoanAmount.value);
   if (loan > 0 && loan >= account.movements.some(acc => acc >= acc * 0.1)) {
-    account.movements.push(loan)
-    updateUI(account)
+    account.movements.push(loan);
+    updateUI(account);
   }
-  inputLoanAmount.value=''
+  inputLoanAmount.value = '';
 });
 ///////////////////////////////////////////////////
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -351,5 +351,25 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 console.log(movements.some(acc => acc > 0));
 console.log(movements.some(acc => acc == 9));
 
-console.log(movements.every(acc=>acc>0))
-console.log(movements.every(acc=>acc>=-4000))
+console.log(movements.every(acc => acc > 0));
+console.log(movements.every(acc => acc >= -4000));
+
+////////////// flat and flatmap methods /////////////
+const arr = [2, 3, 4, 5, 5, 4, 2, 21, 34];
+console.log(arr.splice(2, 3));
+console.log(arr);
+// flat
+const arr1 = [[2, 3, 4], [3, 4, [5, 5]], 90];
+console.log(arr1.flat());
+console.log(arr1.flat(2));
+
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, val) => acc + val, 0);
+console.log(overalBalance);
+// flatmap
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, val) => acc + val, 0);
+console.log(overalBalance2);
