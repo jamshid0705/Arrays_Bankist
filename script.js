@@ -146,7 +146,7 @@ btnTransfer.addEventListener('click', function (e) {
   const transferTo = inputTransferTo.value;
   const amount = Number(inputTransferAmount.value);
   const findAccount = accounts.find(acc => acc.username === transferTo);
-  inputTransferAmount.value=inputTransferTo.value=''
+  inputTransferAmount.value = inputTransferTo.value = '';
   if (findAccount) {
     if (
       amount > 0 &&
@@ -158,6 +158,35 @@ btnTransfer.addEventListener('click', function (e) {
       updateUI(account);
     }
   }
+});
+
+// close account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    account.username === inputCloseUsername.value &&
+    account.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === inputCloseUsername.value
+    );
+    // console.log(index);
+    accounts.splice(index, 1);
+    // console.log(accounts)
+    containerApp.style.opacity = 0;
+  }
+  inputClosePin.value = inputCloseUsername.value = '';
+});
+
+// loan
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const loan = Number(inputLoanAmount.value);
+  if (loan > 0 && loan >= account.movements.some(acc => acc >= acc * 0.1)) {
+    account.movements.push(loan)
+    updateUI(account)
+  }
+  inputLoanAmount.value=''
 });
 ///////////////////////////////////////////////////
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -317,3 +346,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   return age;
 // };
 // console.log(calcAverageHumanAge(ages));
+
+/////////////// some and every methods ////////////////
+console.log(movements.some(acc => acc > 0));
+console.log(movements.some(acc => acc == 9));
+
+console.log(movements.every(acc=>acc>0))
+console.log(movements.every(acc=>acc>=-4000))
