@@ -63,9 +63,10 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ////////////////////////////////// display Movements ///////////////////
 
-const displeyMovement = function (movement) {
+const displeyMovement = function (movement, sort = false) {
   containerMovements.innerHTML = '';
-  movement.forEach(function (mov, index) {
+  const movs = sort ? movement.slice().sort((a, b) => a - b) : movement;
+  movs.forEach(function (mov, index) {
     const html = `<div class="movements__row">
                     <div class="movements__type movements__type--${
                       mov > 0 ? 'deposit' : 'withdrawal'
@@ -178,7 +179,7 @@ btnClose.addEventListener('click', function (e) {
   inputClosePin.value = inputCloseUsername.value = '';
 });
 
-// loan
+////////////////// loan ///////////////
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
   const loan = Number(inputLoanAmount.value);
@@ -187,6 +188,12 @@ btnLoan.addEventListener('click', function (e) {
     updateUI(account);
   }
   inputLoanAmount.value = '';
+});
+//////////////////// sort ///////////////
+let sorts=false
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displeyMovement(account.movements, sorts ? sorts=false : sorts=true);
 });
 ///////////////////////////////////////////////////
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -348,28 +355,45 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(calcAverageHumanAge(ages));
 
 /////////////// some and every methods ////////////////
-console.log(movements.some(acc => acc > 0));
-console.log(movements.some(acc => acc == 9));
+// console.log(movements.some(acc => acc > 0));
+// console.log(movements.some(acc => acc == 9));
 
-console.log(movements.every(acc => acc > 0));
-console.log(movements.every(acc => acc >= -4000));
+// console.log(movements.every(acc => acc > 0));
+// console.log(movements.every(acc => acc >= -4000));
 
-////////////// flat and flatmap methods /////////////
-const arr = [2, 3, 4, 5, 5, 4, 2, 21, 34];
-console.log(arr.splice(2, 3));
-console.log(arr);
-// flat
-const arr1 = [[2, 3, 4], [3, 4, [5, 5]], 90];
-console.log(arr1.flat());
-console.log(arr1.flat(2));
+// ////////////// flat and flatmap methods /////////////
+// const arr = [2, 3, 4, 5, 5, 4, 2, 21, 34];
+// console.log(arr.splice(2, 3));
+// console.log(arr);
+// // flat
+// const arr1 = [[2, 3, 4], [3, 4, [5, 5]], 90];
+// console.log(arr1.flat());
+// console.log(arr1.flat(2));
 
-const overalBalance = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, val) => acc + val, 0);
-console.log(overalBalance);
-// flatmap
-const overalBalance2 = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc, val) => acc + val, 0);
-console.log(overalBalance2);
+// const overalBalance = accounts
+//   .map(acc => acc.movements)
+//   .flat(2)
+//   .reduce((acc, val) => acc + val, 0);
+// console.log(overalBalance);
+// // flatmap
+// const overalBalance2 = accounts
+//   .flatMap((acc) => acc.movements,2)
+//   .reduce((acc, val) => acc + val, 0);
+// console.log(overalBalance2);
+
+////////////////////////// sorting arrays ///////////////////////
+const arr1 = ['jamshid', 'jon', 'ali', "xo'ja", 'boybek', 2, 0];
+console.log(arr1.sort());
+console.log(movements.sort());
+
+// o'sish tartibida
+// agar return musbat qaytarsa a,b holida
+// agar return manfiy qaytarsa b,a holida chiqadi
+// return > 0  A,B
+// return < 0  B,A
+movements.sort((a, b) => a - b);
+console.log(movements);
+// kamayish tartibida
+movements.sort((a, b) => b - a);
+console.log(movements);
+console.log(movements.slice());
