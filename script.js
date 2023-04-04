@@ -190,10 +190,10 @@ btnLoan.addEventListener('click', function (e) {
   inputLoanAmount.value = '';
 });
 //////////////////// sort ///////////////
-let sorts=false
+let sorts = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displeyMovement(account.movements, sorts ? sorts=false : sorts=true);
+  displeyMovement(account.movements, sorts ? (sorts = false) : (sorts = true));
 });
 ///////////////////////////////////////////////////
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -355,11 +355,11 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(calcAverageHumanAge(ages));
 
 /////////////// some and every methods ////////////////
-// console.log(movements.some(acc => acc > 0));
-// console.log(movements.some(acc => acc == 9));
+console.log(movements.some(acc => acc > 0));
+console.log(movements.some(acc => acc == 9));
 
-// console.log(movements.every(acc => acc > 0));
-// console.log(movements.every(acc => acc >= -4000));
+console.log(movements.every(acc => acc > 0));
+console.log(movements.every(acc => acc >= -4000));
 
 // ////////////// flat and flatmap methods /////////////
 // const arr = [2, 3, 4, 5, 5, 4, 2, 21, 34];
@@ -377,23 +377,100 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(overalBalance);
 // // flatmap
 // const overalBalance2 = accounts
-//   .flatMap((acc) => acc.movements,2)
+//   .flatMap((acc) => acc.movements)
 //   .reduce((acc, val) => acc + val, 0);
 // console.log(overalBalance2);
 
 ////////////////////////// sorting arrays ///////////////////////
-const arr1 = ['jamshid', 'jon', 'ali', "xo'ja", 'boybek', 2, 0];
-console.log(arr1.sort());
-console.log(movements.sort());
+// const arr1 = ['jamshid', 'jon', 'ali', "xo'ja", 'boybek', 2, 0];
+// console.log(arr1.sort());
+// console.log(movements.sort());
 
-// o'sish tartibida
-// agar return musbat qaytarsa a,b holida
-// agar return manfiy qaytarsa b,a holida chiqadi
-// return > 0  A,B
-// return < 0  B,A
-movements.sort((a, b) => a - b);
-console.log(movements);
-// kamayish tartibida
-movements.sort((a, b) => b - a);
-console.log(movements);
-console.log(movements.slice());
+// // o'sish tartibida
+// // agar return musbat qaytarsa a,b holida
+// // agar return manfiy qaytarsa b,a holida chiqadi
+// // return > 0  A,B
+// // return < 0  B,A
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+// // kamayish tartibida
+// movements.sort((a, b) => b - a);
+// console.log(movements);
+// console.log(movements.slice());
+
+///////////// array and fill methods ////////////////
+// console.log(new Array(3, 4, 5, 4, 3, 2));
+// let x = new Array(10); // bo'sh joy ajratadi
+// x.fill(9, 2, 4); // uni to'ldirish uchun
+// console.log(x);
+// // from ikkalasi bittada
+// const a = Array.from({ length: 3 }, (val, key) => 3);
+// console.log(a);
+
+////////////// Array methods ////////////////
+//1
+// const bankDepositSum = accounts
+//   .flatMap(val => val.movements)
+//   .filter(val => val > 0)
+//   .reduce((acc, val) => acc + val, 0);
+// console.log(bankDepositSum);
+// //2
+// const summaDeposit = accounts
+//   .flatMap(val => val.movements)
+//   .reduce(
+//     (acc, val) => {
+//       val > 0 ? (acc.deposits += val) : (acc.withdrawals += val);
+//       return acc;
+//     },
+//     { deposits: 0, withdrawals: 0 }
+//   );
+// console.log(summaDeposit);
+
+/////////////////////// coding chellenge 4 /////////////////////////////
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// 1
+dogs.forEach(val => {
+  val.recommendedFood = Math.trunc(val.weight ** 0.75 * 28);
+});
+console.log(dogs);
+// 2
+dogs.forEach(val => {
+  let arr = [];
+  val.owners.forEach(val1 => (val1 === 'Sarah' ? arr.push(val) : ''));
+  if (arr.length) {
+    arr.forEach(val =>
+      val.recommendedFood <= val.curFood * 0.9
+        ? console.log('Sarahning iti juda oz ovqatlanyabdi !')
+        : console.log("Sarahning iti juda ko'p ovqatlanyabdi !")
+    );
+  }
+});
+// 3
+let owEatTooMuch = [];
+let owEatTooLittle = [];
+const eatDogs = dogs.map(val =>
+  val.recommendedFood <= val.curFood * 0.9
+    ? owEatTooLittle.push(...val.owners)
+    : owEatTooMuch.push(...val.owners)
+);
+console.log(owEatTooLittle);
+console.log(owEatTooMuch);
+// 4
+console.log(
+  `${owEatTooLittle.join(',')} larning itlari juda kam ovqatlanadi !`
+);
+console.log(`${owEatTooMuch.join(',')} larning itlari juda ko'p ovqatlanadi !`);
+// 5
+const some=dogs.some(val=>val.recommendedFood===val.curFood)
+console.log(some)
+// 7
+const filter=dogs.filter(val=>val.curFood*0.9<=val.recommendedFood && val.recommendedFood<=val.curFood*1.1)
+console.log(filter)
+// 8
+console.log(dogs.sort(val=>val.recommendedFood))
